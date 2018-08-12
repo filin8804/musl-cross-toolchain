@@ -2,12 +2,25 @@
 
 FROM alpine
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL \
+  org.label-schema.build-date="${BUILD_DATE}" \
+  org.label-schema.vcs-url="https://github.com/rethink-neil/musl-cross-toolchain.git" \
+  org.label-schema.vcs-ref="${VCS_REF}" \
+  org.label-schema.schema-version="1.0.0-rc1"
+
 ARG MUSL_CROSS_MAKE_VERSION="0.9.7"
 ARG TARGET="x86_64-linux-musl"
 ARG OUTPUT="/opt/cross"
 ARG DL_CMD="curl -C- -Lo"
 
-ENV MUSL_CROSS_MAKE_VERSION="${MUSL_CROSS_MAKE_VERSION}" TARGET="${TARGET}" OUTPUT="${OUTPUT}" DL_CMD="${DL_CMD}"
+ENV \
+  MUSL_CROSS_MAKE_VERSION="${MUSL_CROSS_MAKE_VERSION}" \
+  TARGET="${TARGET}" \
+  OUTPUT="${OUTPUT}" \
+  DL_CMD="${DL_CMD}"
 
 RUN set -euvx \
   && cd "$(mktemp -d)" \

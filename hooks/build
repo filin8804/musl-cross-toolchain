@@ -2,6 +2,10 @@
 
 set -euvx
 
+readonly this="$(readlink -f "$0")"
+readonly here="$(dirname "${this}")"
+readonly project_dir="$(dirname "${here}")"
+
 # https://medium.com/microscaling-systems/labelling-automated-builds-on-docker-hub-f3d073fb8e1
 
 env | sort
@@ -9,5 +13,5 @@ env | sort
 docker image build \
        --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
        --build-arg VCS_REF="$(git rev-parse HEAD)" \
-       --tag "${IMAGE_NAME}" \
-       .
+       --tag "${IMAGE_NAME:-$(basename "${project_dir}"):latest}" \
+       "${project_dir}"
