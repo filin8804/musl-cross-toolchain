@@ -18,4 +18,5 @@ RUN set -euvx \
   && echo "OUTPUT := ${OUTPUT}" >>"musl-cross-make-${MUSL_CROSS_MAKE_VERSION}/config.mak" \
   && echo "DL_CMD := ${DL_CMD}" >>"musl-cross-make-${MUSL_CROSS_MAKE_VERSION}/config.mak" \
   && make -C"musl-cross-make-${MUSL_CROSS_MAKE_VERSION}" -j"$(getconf _NPROCESSORS_ONLN)" install \
+  && apk --no-cache del build-base curl \
   && rm -rf "${PWD}"
